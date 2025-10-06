@@ -30,7 +30,7 @@ Estas librerías permiten que el ESP32:
 ✅ Guarde estado en memoria NVS (no volátil)
 ✅ Ejecute tareas y temporizadores bajo FreeRTOS
 
-🌐 Configuración de red y MQTT
+## 🌐 Configuración de red y MQTT
 const char* ssid = "moto";
 const char* password = "12345678seh";
 
@@ -42,7 +42,7 @@ const char* mqtt_password = "Prueba1#";
 
 El ESP32 se conecta primero a la red WiFi local y luego al servidor HiveMQ Cloud, usando autenticación por usuario y contraseña junto con un certificado raíz TLS para garantizar la seguridad.
 
-🧭 Topics MQTT definidos
+## 🧭 Topics MQTT definidos
 const char* CONTROL_MOTOR_TOPIC = "control-motor";   // Recibe ON/OFF
 const char* TEMPERATURA_TOPIC   = "temperatura";     // Envía la lectura
 
@@ -50,7 +50,7 @@ const char* TEMPERATURA_TOPIC   = "temperatura";     // Envía la lectura
 📤 temperatura → El ESP32 publica periódicamente el valor leído desde el UNO.
 📥 control-motor → El ESP32 recibe comandos para encender o apagar el motor de forma remota.
 
-⚙️ Pines y dirección I2C
+## ⚙️ Pines y dirección I2C
 #define MOTOR_PIN 27
 #define LED_PIN   26
 #define I2C_SLAVE_ADDR 0x08
@@ -64,7 +64,7 @@ I2C_SLAVE_ADDR	Dirección del Arduino UNO en el bus I2C
 El código incluye un Root Certificate Authority (CA) que valida la autenticidad del servidor MQTT.
 Esto asegura que toda la comunicación esté cifrada y autenticada.
 
-🧩 Objetos principales
+## 🧩 Objetos principales
 Preferences preferences;       // Guarda configuración en memoria NVS
 WiFiClientSecure secureClient; // Cliente TLS
 PubSubClient client(secureClient); // Cliente MQTT sobre TLS
@@ -76,7 +76,7 @@ secureClient → establece la conexión TLS segura.
 
 client → maneja las suscripciones y publicaciones MQTT.
 
-🔧 Variables globales
+## 🔧 Variables globales
 volatile float temperatura = 0.0;
 volatile bool motorEncendido = false;
 volatile bool lecturaPending = false;
@@ -94,7 +94,7 @@ void IRAM_ATTR timer_callback(void* arg) {
 
 Cada 30 segundos, el timer activa la bandera lecturaPending indicando que debe leerse una nueva temperatura desde el Arduino UNO.
 
-📡 Lectura por I2C
+## 📡 Lectura por I2C
 bool leerTemperaturaI2C(float &outTemp) {
   Wire.requestFrom(I2C_SLAVE_ADDR, (uint8_t)8);
   ...
@@ -104,7 +104,7 @@ bool leerTemperaturaI2C(float &outTemp) {
 
 Solicita al Arduino UNO la temperatura actual y la convierte de texto a número flotante (float).
 
-📤 Publicar temperatura en MQTT
+## 📤 Publicar temperatura en MQTT
 void publicarTemperatura(float temp) {
   dtostrf(temp, 4, 2, buffer);
   client.publish(TEMPERATURA_TOPIC, buffer, true);
@@ -113,7 +113,7 @@ void publicarTemperatura(float temp) {
 
 Convierte la lectura a string y la publica en el broker MQTT con retención (retain=true).
 
-📥 Callback MQTT
+## 📥 Callback MQTT
 void callback(char* topic, byte* payload, unsigned int length) {
   if (strcmp(topic, CONTROL_MOTOR_TOPIC) == 0) {
     if (payload[0] == '1') { ... }  // Encender motor
@@ -124,8 +124,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
 Recibe comandos remotos y actualiza el estado del motor, LED y memoria NVS.
 
-🔄 Tareas principales (FreeRTOS)
-🧵 taskMQTT
+## 🔄 Tareas principales (FreeRTOS)
+## 🧵 taskMQTT
 
 Mantiene conexión activa con el broker.
 
@@ -133,7 +133,7 @@ Reconecta si se pierde.
 
 Se suscribe al topic control-motor.
 
-⚙️ taskMotor
+## ⚙️ taskMotor
 
 Cada vez que lecturaPending es true:
 
@@ -149,7 +149,7 @@ Aplica control automático:
 
 Publica el nuevo valor en MQTT.
 
-🚀 Setup del ESP32
+## 🚀 Setup del ESP32
 void setup() {
   inicializarWiFi();
   inicializarMQTT();
@@ -172,7 +172,7 @@ Crea las tareas (taskMQTT, taskMotor).
 
 Inicia el temporizador de 30 s.
 
-🔁 Loop principal
+## 🔁 Loop principal
 void loop() {
   vTaskDelay(1000 / portTICK_PERIOD_MS);
 }
@@ -180,7 +180,7 @@ void loop() {
 
 No ejecuta lógica directa: todo se maneja con tareas y temporizadores del sistema operativo FreeRTOS.
 
-📊 Flujo de funcionamiento
+## 📊 Flujo de funcionamiento
 
 Arduino UNO mide la temperatura (DHT11) y la entrega por I2C.
 
