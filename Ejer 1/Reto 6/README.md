@@ -23,7 +23,7 @@ Incorrecto:
 Muestra mensaje y reinicia el juego.
 
 ### Codigo comentado
-
+```cpp
 // Configuración
 const int numLeds = 4;  
 const int leds[] = {3, 4, 5, 6};     // Pines de LEDs
@@ -103,3 +103,4 @@ int esperarBoton() {
     }
   }
 }
+```

@@ -17,6 +17,7 @@ Cuando el botón está presionado (LOW), recorre el arreglo de inicio a fin para
 
 Cuando está suelto (HIGH), recorre de fin a inicio para apagarlos.
 ## codigo comentado
+```cpp
 // Pines
 const int pinBoton = 2;     // Pin del pulsador
 const int leds[] = {3, 4, 5, 6, 7, 8, 9, 10}; // Pines de los 8 LEDs
@@ -53,3 +54,4 @@ void loop() {
     }
   }
 }
+```

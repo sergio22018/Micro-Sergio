@@ -15,6 +15,7 @@ Detección de flanco:
 -Solo se cambia el estado cuando detecta que el botón fue presionado (transición de HIGH a LOW).
 
 ## COMO SE USA
+```cpp
 Se crean 2 variables :
  -const int pinBoton = 13; 
  -const int pinLED = 8;    
@@ -46,4 +47,4 @@ void loop() {
   }
   estadoBotonAnterior = estadoBoton;
 }
-
+```

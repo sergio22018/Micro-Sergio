@@ -21,6 +21,7 @@ Límites:
 Flanco de bajada: Evita que se cambie el brillo varias veces al mantener presionado el botón.
 
 ### codigo comentado
+```cpp
 // Pines
 const int botonSubir = 2;   // Botón para aumentar brillo
 const int botonBajar = 3;   // Botón para disminuir brillo
@@ -62,3 +63,4 @@ void loop() {
   estadoAnteriorSubir = estadoSubir;
   estadoAnteriorBajar = estadoBajar;
 }
+```

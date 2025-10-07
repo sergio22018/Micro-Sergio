@@ -18,7 +18,7 @@ Evita incrementos múltiples mientras se mantiene el botón presionado.
 Anti-rebote básico con delay(50) para evitar lecturas falsas.
 
 ### Codigo comentado
-
+```cpp
 // Pines
 const int boton = 2;          // Botón para incrementar
 const int leds[] = {8, 9, 10, 11}; // LEDs para bits (LSB a MSB)
@@ -58,3 +58,4 @@ void mostrarBinario(int valor) {
     digitalWrite(leds[i], bit);
   }
 }
+```

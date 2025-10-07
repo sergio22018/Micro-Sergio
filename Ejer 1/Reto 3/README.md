@@ -21,6 +21,7 @@ Un LED se enciende mientras el otro se apaga.
 
 Se alternan cada 200 ms.
 ### Codigo comentado
+```cpp
 // Pines
 const int botonInicio = 2;   // Botón para iniciar parpadeo
 const int botonParo = 3;     // Botón para detener parpadeo
@@ -63,3 +64,4 @@ void loop() {
     delay(200);
   }
 }
+```
